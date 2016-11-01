@@ -1,6 +1,7 @@
 package Components;
 
 public class CommandInterface {
+	//Executes commands to the Operating System and the simulators
 	
 	public void proc(){
 		
