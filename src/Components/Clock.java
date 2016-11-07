@@ -1,14 +1,16 @@
 package Components;
 
+//Simulates a CPU clock
+
 public class Clock {
-	//Simulates a CPU clock
+	private int time;
 	
 	public void execute() {
-		 
+		time++;
 	 }
 	
 	public void getClock() {
-		
+		return time;
 	}
 
 }
