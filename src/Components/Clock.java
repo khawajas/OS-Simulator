@@ -9,7 +9,7 @@ public class Clock {
 		time++;
 	 }
 	
-	public getClock() {
+	public int getClock() {
 		return time;
 	}
 
