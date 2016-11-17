@@ -129,13 +129,11 @@ public class CommandInterface {
 	public String getProgramName(){
 		return programName;
 	}
-	public int getExeCycle() {
-		return exeCycle;
-	}
+	
 	//	
 	public void exe() {
-		getExeCycle();
-		Scanner scanner = new Scanner(in);
+		
+		
 		
 		
 			
