@@ -1,7 +1,13 @@
 package Components;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -60,7 +66,6 @@ public class CommandInterface {
 		String program = name;
 		FileReader reader = null;
 		String line = null;
-		FilerReader reader = null;
 		try {
 			reader = new FileReader(program);
 			BufferedReader bReader = new BufferedReader(reader);
@@ -82,20 +87,26 @@ public class CommandInterface {
 				else if (line.startsWith("OUT")){
 					
 				}
-			}
+			}  
+				
+			
+		}  catch(IOException e) {
+			
 		}
+			
+		
 	}
 		//load a job file when this is called
 	public void load(File file){
 			FileReader reader = null;
 			counter = 0;
 			String line = null;
-			FileReader reader = null;
+			FileReader r = null;
 			try {
-				reader = new FileReader(file);
-				BufferedReader bReader = new BufferedReader(reader);
+				r = new FileReader(file);
+				BufferedReader bRead = new BufferedReader(r);
 				
-				while((line = bReader.readLine()) != null) {
+				while((line = bRead.readLine()) != null) {
 					counter++;
 					String command = null;
 					int cycleTime;
@@ -111,7 +122,7 @@ public class CommandInterface {
 						programName = line.substring(line.lastIndexOf(" "), line.length());	
 						List<String> newProcessList = new ArrayList<String>(newProcess);
 						
-					}
+					} 
 					
 					if (line.startsWith("EXE")){
 						readProgramFile(programName);
@@ -121,6 +132,8 @@ public class CommandInterface {
 				
 					
 				}
+				
+			} catch (IOException e) {
 				
 			}
 			
