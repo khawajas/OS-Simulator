@@ -14,8 +14,12 @@ import javax.swing.JOptionPane;
 
 public class CommandInterface {
 	//Executes commands to the Operating System and the simulators
-	int timeNeeded, timeUsed, priority, numberOfIO, counter;
+	int timeNeeded, timeUsed, priority, numberOfIO;
 	long memory;
+	int counter = 0;
+	String line = null;
+	String programName = null;
+	String num;
 	public static void main(String[] args){
 		
 		
@@ -62,7 +66,7 @@ public class CommandInterface {
 	}
 	//read a program file by name, called in load method when "EXE" is read
 	public void readProgramFile(String name){
-		int counter = 0;
+		int counter1 = 0;
 		String program = name;
 		FileReader reader = null;
 		String line = null;
@@ -70,8 +74,8 @@ public class CommandInterface {
 			reader = new FileReader(program);
 			BufferedReader bReader = new BufferedReader(reader);
 			while((line = bReader.readLine()) != null) {
-				counter++;
-				if (counter == 1){
+				counter1++;
+				if (counter1 == 1){
 				int memoryValue = Integer.parseInt(bReader.readLine());
 				}
 				else if (line.startsWith("CALCULATE")){
@@ -98,22 +102,22 @@ public class CommandInterface {
 	}
 		//load a job file when this is called
 	public void load(File file){
-			FileReader reader = null;
-			counter = 0;
-			String line = null;
+			int counter2 = 0;
+			line = null;
 			FileReader r = null;
 			try {
 				r = new FileReader(file);
 				BufferedReader bRead = new BufferedReader(r);
 				
 				while((line = bRead.readLine()) != null) {
-					counter++;
+					programName = null;
+					
+					counter2++;
 					String command = null;
 					int cycleTime;
 					Queue<String> newProcess = new LinkedList<String>();
 					if (line.contains(" ")) {
-						String num;
-						String programName;
+						
 						command = line.substring(0, line.indexOf(" "));
 						newProcess.add(command);
 						num = line.substring(line.indexOf(" "), line.lastIndexOf(" "));
