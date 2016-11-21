@@ -1,8 +1,10 @@
 package Components;
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -21,24 +23,25 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class CommandInterface {
 	//Executes commands to the Operating System and the simulators
-	int timeNeeded, timeUsed, priority, numberOfIO;
+	
 	long memory;
 	int memoryValue;
 	int counter = 0;
 	String line = null;
 	String programName = null;
 	String num;
+	int numberOfCycles;
 	Queue<String> newProcess = new LinkedList<String>();
 	
 	private JFrame mainFrame;
-	private JLabel headerLabel;
-	private JLabel statusLabel;
 	private JPanel controlPanel;
 	
 	public CommandInterface(){
@@ -57,7 +60,7 @@ public class CommandInterface {
 	
 	public void prepareGUI() {
 		mainFrame = new JFrame("Operating System Interface");
-		mainFrame.setSize(500, 500);
+		mainFrame.setSize(900, 900);
 		
 		mainFrame.setLayout(new GridLayout(3,1));
 		mainFrame.addWindowListener(new WindowAdapter() {
@@ -66,22 +69,22 @@ public class CommandInterface {
 			}
 		});
 		
-		headerLabel = new JLabel("", JLabel.CENTER);
-		statusLabel = new JLabel("", JLabel.CENTER);
+		
 		
 		
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
-		String col[] = {"Process Name", "Process State", "Memory", "Number of Cycles"};
 		
-		DefaultTableModel  tableModel = new DefaultTableModel(col, 0);
-		JTable table = new JTable(tableModel);
+		//JTable table = new JTable();
 		
+		//JScrollPane tableContainer = new JScrollPane(table);
+		//controlPanel.add(tableContainer, BorderLayout.CENTER);
+		
+		mainFrame.getContentPane().add(controlPanel);
 		
 		
 		mainFrame.add(controlPanel);
-		mainFrame.add(statusLabel);
-		mainFrame.add(table);
+		//mainFrame.add(table);
 		mainFrame.setVisible(true);
 	}
 	private void runGUI() {
@@ -89,23 +92,28 @@ public class CommandInterface {
 		
 		JLabel commandLabel = new JLabel("Command: ", JLabel.RIGHT);
 		final JTextField commandText = new JTextField(10);
-		
+		JLabel numberOfCyclesLabel = new JLabel("Number of Cycles: ", JLabel.RIGHT);
+		final JTextField numberOfCyclesText = new JTextField(10);
 		JButton executeButton = new JButton("Execute");
 		executeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String command = commandText.getText();
+
 				switch (command) {
 				case "PROC":
+					
 					proc();
 					break;
 				case "MEM":
-					mem();
+					JLabel memoryLabel = new JLabel("",JLabel.LEFT);
+					memoryLabel.setText(mem());
+					controlPanel.add(memoryLabel);
+					mainFrame.setVisible(true);
 					break;
 				case  "LOAD":
 					try {
-						load("jobFile2.txt");
+						load("jobFile.txt");
 					} catch (IOException e1) {
-						
 						e1.printStackTrace();
 					}
 					break;
@@ -116,13 +124,18 @@ public class CommandInterface {
 					reset();
 					break;
 				case  "EXIT":
-					promptUser();
+					exit();
 					break;
 				}
 			}
 		});
+		//numberOfCycles = Integer.parseInt(numberOfCyclesText.getText());
+		
 		controlPanel.add( commandLabel);
 		controlPanel.add(commandText);
+		controlPanel.add(numberOfCyclesLabel);
+		controlPanel.add(numberOfCyclesText);
+		
 		controlPanel.add(executeButton);
 		mainFrame.setVisible(true);
 		
@@ -134,14 +147,29 @@ public class CommandInterface {
 	
 	
 	public void proc(){
+		String[] col = {"Process State", "CPU Time Needed", "CPU Time Used", "Priority", "Number of I/O Requests"};
+		DefaultTableModel  tableModel = new DefaultTableModel(col, 0);
+		JTable table = new JTable(tableModel);
+		JScrollPane tableContainer = new JScrollPane(table);
+		tableContainer.getViewport().setViewPosition(new Point(5,5));
+		mainFrame.add(tableContainer, BorderLayout.CENTER);
+		mainFrame.setSize(300, 150);
+		//controlPanel.setLayout(new BorderLayout());
+		//controlPanel.add(tableContainer, BorderLayout.CENTER);
+		//controlPanel.add(tableContainer,  BorderLayout.PAGE_START);
+		//mainFrame.getContentPane().add(controlPanel);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
 		
 	}
 	
 	//	current usage of memory
-	public void mem(){
+	public String mem(){
 		Runtime runtime = Runtime.getRuntime();
 		memory = runtime.totalMemory() - runtime.freeMemory();
-		System.out.println("Used memory: " + memory);
+		String num = Long.toString(memory);
+		String output = "Memory used: "+ num;
+		return output;
 			
 	}
 	//read a program file by name, called in load method when "EXE" is read
@@ -234,15 +262,15 @@ public class CommandInterface {
 	}
 		
 	public void reset() {
-			
-			
+			mainFrame.repaint();
+			mainFrame.setVisible(true);
 	}
 		
 	public void promptUser(){
 			
 	}
 	public void exit() {
-		
+		mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
 	}
 		
 }
