@@ -18,9 +18,7 @@ import java.util.ArrayList;
  *	
  * 
  */
-public class ProcessControlBlock {
-	//work in progress...
-	
+public class ProcessControlBlock {	
 	private ProcessStates processState;
 	private int pID;
 	private int priority;
