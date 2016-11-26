@@ -153,7 +153,7 @@ public class CommandInterface {
 		JScrollPane tableContainer = new JScrollPane(table);
 		tableContainer.getViewport().setViewPosition(new Point(5,5));
 		mainFrame.add(tableContainer, BorderLayout.CENTER);
-		mainFrame.setSize(300, 150);
+		mainFrame.setSize(900, 900);
 		//controlPanel.setLayout(new BorderLayout());
 		//controlPanel.add(tableContainer, BorderLayout.CENTER);
 		//controlPanel.add(tableContainer,  BorderLayout.PAGE_START);
@@ -231,8 +231,9 @@ public class CommandInterface {
 						List<String> newProcessList = new ArrayList<String>(newProcess);
 					} 
 					
-					if (line.startsWith("EXE")){
-						readProgramFile(programName);
+					
+					 if (line.startsWith("EXE")){
+						readProgramFile(getProgramName());
 						
 					}
 					
@@ -243,7 +244,7 @@ public class CommandInterface {
 				
 			//} catch (IOException e) {
 			//	System.out.println("no");
-			}
+			} 
 			
 	
 
