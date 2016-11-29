@@ -29,6 +29,9 @@ public class ProcessControlBlock {
 	
 	public ArrayList<String> processList = new ArrayList<String>();
 	
+	public ProcessControlBlock(){
+		
+	}
 	public ProcessControlBlock(ProcessStates pState, int id, int sTime, int p){
 		this.processState = pState;
 		this.pID = id;
