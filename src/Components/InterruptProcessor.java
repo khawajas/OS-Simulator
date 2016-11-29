@@ -22,17 +22,18 @@ public class InterruptProcessor {
 		InterruptProcessor.interruptOn = interrupt;
 	}
 	  
-	public void addEvent(ECB flag) {
+	public void addEvent(EventControlBlock flag) {
 		nxtUp.add(flag);
 	    
 	}
 	  
-	public ECB getEvent(int element_number) {
-		nxtUp.remove(element_number);
-		//return nxtUp.getEvent(element_number);
+	public EventControlBlock getEvent(int element_number) {
+		//nxtUp.remove(element_number);
+		return nxtUp.getEvent(element_number);
 	}
 
-	public boolean hasInterruptOnStarted() {
+	public static boolean hasInterruptOnStarted() {
 		return interruptOn;
 	}
+
 }

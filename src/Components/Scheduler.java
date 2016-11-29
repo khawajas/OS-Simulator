@@ -5,16 +5,23 @@ public class Scheduler {
 	//Schedules processes according to round robin algorithm 
 	//with a time quantum of 10 cycles
 	
+	private static ExecutionQueue ready = new ExecutionQueue();
 	
-	public void insertPCB(){
+	
+	
+	public void insertPCB(ProcessControlBlock process){
+		ready.enQueue(process);
+		
 	}
 	    
-	public void removePCB(){
-	    	
+	public void removePCB(ProcessControlBlock process){
+		ready.deQueue(process);
+		
 	}
 	    	    
-	public void getState(){
-
+	public ProcessStates getState(ProcessControlBlock process){
+		return process.getState();
+		
 	}
 	    
 	public void setState(){
@@ -34,7 +41,6 @@ public class Scheduler {
 	}
 	    
 	public void setArrival(){
-	    	
 	}
 	    
 	public void getCPUTime(){    	

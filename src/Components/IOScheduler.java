@@ -11,7 +11,7 @@ public class IOScheduler {
 	//and the average response time experienced by the applications.
 
 	
-	public void scheduleIO(ProcessControlBlock process, int timeIn) {
+	public int scheduleIO(ProcessControlBlock process, int timeIn) {
 		int bigBang = IOBurst.generateIOBurst();
 
 		InterruptProcessor.addEvent(process, timeIn + bigBang);
