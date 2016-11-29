@@ -17,6 +17,4 @@ public class EventQueue {
 	public void deQueue(EventControlBlock event) {
 		queue.remove(event);
 	}
-
-
 }

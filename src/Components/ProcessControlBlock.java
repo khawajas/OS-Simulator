@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /*A ProcessControlBlock/PCB is a data structure within the OS, allows the OS to locate certain processes
  *contains:
- * 	the state of the process - done
- * 	the unique ID of the process - pID - done
+ * 	the state of the process
+ * 	the unique ID of the process - pID
  * 	Pointer to the parent process or child process
  * 	Program Counter - pointer to address of the next instruction to be executed
  * 	CPU register -  where process need to be stored for execution for running state
