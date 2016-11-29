@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class CommandInterface {
+public class CommandInterface extends JFrame {
 	//Executes commands to the Operating System and the simulators
 	
 	long memory;
@@ -49,9 +50,10 @@ public class CommandInterface {
 	}
 	
 	public static void main(String[] args) throws IOException{
-		
+		Clock c = new Clock();
 		CommandInterface commandInterface = new CommandInterface();
 		commandInterface.runGUI();
+		c.execute();
 		
 		//commandInterface.load("jobFile.txt");
 		
@@ -60,7 +62,7 @@ public class CommandInterface {
 	
 	public void prepareGUI() {
 		mainFrame = new JFrame("Operating System Interface");
-		mainFrame.setSize(900, 900);
+		mainFrame.setSize(400, 300);
 		
 		mainFrame.setLayout(new GridLayout(3,1));
 		mainFrame.addWindowListener(new WindowAdapter() {
@@ -75,10 +77,6 @@ public class CommandInterface {
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
 		
-		//JTable table = new JTable();
-		
-		//JScrollPane tableContainer = new JScrollPane(table);
-		//controlPanel.add(tableContainer, BorderLayout.CENTER);
 		
 		mainFrame.getContentPane().add(controlPanel);
 		
@@ -92,33 +90,36 @@ public class CommandInterface {
 		
 		JLabel commandLabel = new JLabel("Command: ", JLabel.RIGHT);
 		final JTextField commandText = new JTextField(10);
-		JLabel numberOfCyclesLabel = new JLabel("Number of Cycles: ", JLabel.RIGHT);
-		final JTextField numberOfCyclesText = new JTextField(10);
+		
 		JButton executeButton = new JButton("Execute");
 		executeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String command = commandText.getText();
 
 				switch (command) {
-				case "PROC":
+				case "PROC" :
+					
 					
 					proc();
 					break;
 				case "MEM":
-					JLabel memoryLabel = new JLabel("",JLabel.LEFT);
-					memoryLabel.setText(mem());
-					controlPanel.add(memoryLabel);
-					mainFrame.setVisible(true);
+					mem();
+					
 					break;
 				case  "LOAD":
 					try {
-						load("jobFile.txt");
+						load("jobFile1");
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case  "EXE":
-					exe();
+					JLabel numberOfCyclesLabel = new JLabel("Number of Cycles: ", JLabel.RIGHT);
+					JTextField numberOfCyclesText = new JTextField(10);
+					controlPanel.add(numberOfCyclesLabel);
+					controlPanel.add(numberOfCyclesText);
+					mainFrame.setVisible(true);
+					//exe();
 					break;
 				case  "RESET":
 					reset();
@@ -133,8 +134,8 @@ public class CommandInterface {
 		
 		controlPanel.add( commandLabel);
 		controlPanel.add(commandText);
-		controlPanel.add(numberOfCyclesLabel);
-		controlPanel.add(numberOfCyclesText);
+		//controlPanel.add(numberOfCyclesLabel);
+		//controlPanel.add(numberOfCyclesText);
 		
 		controlPanel.add(executeButton);
 		mainFrame.setVisible(true);
@@ -147,29 +148,44 @@ public class CommandInterface {
 	
 	
 	public void proc(){
-		String[] col = {"Process State", "CPU Time Needed", "CPU Time Used", "Priority", "Number of I/O Requests"};
-		DefaultTableModel  tableModel = new DefaultTableModel(col, 0);
-		JTable table = new JTable(tableModel);
-		JScrollPane tableContainer = new JScrollPane(table);
-		tableContainer.getViewport().setViewPosition(new Point(5,5));
-		mainFrame.add(tableContainer, BorderLayout.CENTER);
-		mainFrame.setSize(900, 900);
-		//controlPanel.setLayout(new BorderLayout());
-		//controlPanel.add(tableContainer, BorderLayout.CENTER);
-		//controlPanel.add(tableContainer,  BorderLayout.PAGE_START);
-		//mainFrame.getContentPane().add(controlPanel);
-		mainFrame.pack();
-		mainFrame.setVisible(true);
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		String[] col = {"Process State", "CPU Time Needed","CPU Time Used", "Number of I/O Requests"};
+		ProcessControlBlock pcb = new ProcessControlBlock();
+		Clock c = new Clock();
+		Object rowData[][] = { { pcb.getState(), "" , "","" } };
+		    
+		
+		JTable table = new JTable(rowData, col);
+		JScrollPane scrollPane = new JScrollPane(table);
+		frame.add(scrollPane, BorderLayout.CENTER);
+		frame.setSize(300, 150);
+		frame.setVisible(true);
+	
+		
 		
 	}
 	
 	//	current usage of memory
-	public String mem(){
+	public void mem(){
 		Runtime runtime = Runtime.getRuntime();
 		memory = runtime.totalMemory() - runtime.freeMemory();
 		String num = Long.toString(memory);
-		String output = "Memory used: "+ num;
-		return output;
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		String[] col = {"Memory Used"};
+		
+		
+		Object rowData[][] = { { num} };
+		    
+		
+		JTable table = new JTable(rowData, col);
+		JScrollPane scrollPane = new JScrollPane(table);
+		frame.add(scrollPane, BorderLayout.CENTER);
+		frame.setSize(300, 150);
+		frame.setVisible(true);
+	
+		
 			
 	}
 	//read a program file by name, called in load method when "EXE" is read
@@ -210,6 +226,7 @@ public class CommandInterface {
 	}
 		//load a job file when this is called
 	public void load(String name) throws IOException{
+			
 			File f = new File(name);
 			line = null;
 			
@@ -259,11 +276,14 @@ public class CommandInterface {
 		
 		
 		
+		
 			
 	}
 		
 	public void reset() {
-			mainFrame.repaint();
+			Clock clock = new Clock();
+			clock.resetClock();
+			mainFrame.setVisible(false);
 			mainFrame.setVisible(true);
 	}
 		

@@ -27,6 +27,9 @@ public class ProcessControlBlock {
 	private int startTime;
 	private int endTime;
 	
+	public ProcessControlBlock(){
+		
+	}
 	public ProcessControlBlock(ProcessStates pState, int id, int sTime, int p){
 		this.processState = pState;
 		this.pID = id;
