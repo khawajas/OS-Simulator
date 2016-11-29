@@ -1,5 +1,7 @@
 package Components;
 
+import java.util.ArrayList;
+
 /*A ProcessControlBlock/PCB is a data structure within the OS, allows the OS to locate certain processes
  *contains:
  * 	the state of the process - done
@@ -16,9 +18,7 @@ package Components;
  *	
  * 
  */
-public class ProcessControlBlock {
-	//work in progress...
-	
+public class ProcessControlBlock {	
 	private ProcessStates processState;
 	private int pID;
 	private int priority;
@@ -26,6 +26,8 @@ public class ProcessControlBlock {
 	
 	private int startTime;
 	private int endTime;
+	
+	public ArrayList<String> processList = new ArrayList<String>();
 	
 	public ProcessControlBlock(){
 		
@@ -65,8 +67,14 @@ public class ProcessControlBlock {
 		this.priority = p;
 	}
 	
+	//setter and getters for the time it takes to complete the process
+	public void setEndTime(int eTime){
+		this.endTime = eTime;
+	}
 	
-	
+	public int getEndTime(){
+		return endTime;
+	}
 	
 	
 	
