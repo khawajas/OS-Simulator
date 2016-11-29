@@ -1,5 +1,7 @@
 package Components;
 
+import java.util.Queue;
+
 public class IOScheduler {
 	//Simulates I/O devices.
 	//uses FIFO algorithm
@@ -9,12 +11,23 @@ public class IOScheduler {
 	//and the average response time experienced by the applications.
 
 	
-	public void scheduleIO() {
+	public void scheduleIO(ProcessControlBlock process, int timeIn) {
+		int bigBang = IOBurst.generateIOBurst();
+
+		InterruptProcessor.addEvent(process, timeIn + bigBang);
+
+		if (!InterruptProcessor.hasInterruptOnStarted())
+		{
+			startIO();
+		}
+
+		return bigBang;
 
 	}
 	  
 	public void startIO() {
-	    
+		//.signalInterrupt(true);
+		InterruptProcessor.signalInterrupt(true);
 	}
 
 }
