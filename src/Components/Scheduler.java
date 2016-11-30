@@ -25,7 +25,7 @@ public class Scheduler {
 	}
 	    
 	public void setState(){
-	    	
+		
 	}
 	
 	public void getWait(){

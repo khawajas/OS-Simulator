@@ -21,23 +21,27 @@ import java.util.ArrayList;
 public class ProcessControlBlock {	
 	private ProcessStates processState;
 	private int pID;
-	private int priority;
 	private Clock clock;
 	
 	private int startTime;
 	private int endTime;
+	
+	private int wait;
+	private int arrival;
 	
 	public ArrayList<String> processList = new ArrayList<String>();
 	
 	public ProcessControlBlock(){
 		
 	}
-	public ProcessControlBlock(ProcessStates pState, int id, int sTime, int p){
+	public ProcessControlBlock(ProcessStates pState, int id, int sTime, int arrival){
 		this.processState = pState;
 		this.pID = id;
-		this.priority = p;
+		this.arrival = arrival;
 		this.startTime = sTime;
 		this.clock = new Clock();
+		
+		
 	}
 	
 	//setters and getters for Process States
@@ -58,15 +62,6 @@ public class ProcessControlBlock {
 		this.pID = id;
 	}
 	
-	//setters an getters for priority
-	public int getPriority(){
-		return priority;
-	}
-	
-	public void setPriority(int p){
-		this.priority = p;
-	}
-	
 	//setter and getters for the time it takes to complete the process
 	public void setEndTime(int eTime){
 		this.endTime = eTime;
@@ -74,6 +69,19 @@ public class ProcessControlBlock {
 	
 	public int getEndTime(){
 		return endTime;
+	}
+	public int getWait() {
+		return wait;
+	}
+	public void setWait(int wait) {
+		this.wait = wait;
+		
+	}
+	public int getArrival() {
+		return arrival;
+	}
+	public void setArrival(int arrival) {
+		this.arrival = arrival;
 	}
 	
 	
