@@ -12,17 +12,17 @@ public class EventControlBlock {
 	int bigBang;
 	ProcessControlBlock process;
 
-	public EventControlBlock(ProcessControlBlock process, int timeIn) {
-		process = process;
-		timeIn = bigBang;
+	public EventControlBlock(ProcessControlBlock p, int timeIn) {
+		this.process = p;
+		this.bigBang = timeIn;
 	}
 
-	public void setService(ProcessControlBlock process) {
-		process = process;
+	public void setService(ProcessControlBlock p) {
+		this.process = p;
 	}
 
 	public void setBigBang(int timeIn){
-		timeIn = bigBang;
+		this.bigBang = timeIn;
 	}
 
 	public ProcessControlBlock getProcess() {

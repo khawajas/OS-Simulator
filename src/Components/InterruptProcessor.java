@@ -6,16 +6,9 @@ import java.util.PriorityQueue;
 
 public class InterruptProcessor {
 	//Simulates an interrupt processor
-
-	static boolean interruptOn;
-
 	//Constructs a new interrupt processor
 
-	public InterruptProcessor() {
-		interruptOn = false;
-	}
-
- 	static PriorityQueue<Object> nxtUp = new PriorityQueue<Object>();
+	public static boolean interruptOn = false;
 
 	
 	public void signalInterrupt(boolean interrupt) {
@@ -23,7 +16,7 @@ public class InterruptProcessor {
 	}
 	  
 	public static void addEvent(EventControlBlock flag) {
-		nxtUp.add(flag);
+		EventQueue.enQueue(flag);
 	    
 	}
 	  

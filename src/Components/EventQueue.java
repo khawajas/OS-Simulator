@@ -8,9 +8,9 @@ import java.util.PriorityQueue;
  */
 public class EventQueue {
 	
-	PriorityQueue <EventControlBlock> queue = new PriorityQueue<EventControlBlock>();
+	static PriorityQueue <EventControlBlock> queue = new PriorityQueue<EventControlBlock>();
 		
-	public void enQueue(EventControlBlock event) {
+	public static void enQueue(EventControlBlock event) {
 	    queue.add(event);
 	}
 		  
