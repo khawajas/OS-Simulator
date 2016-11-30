@@ -16,7 +16,6 @@ public class Scheduler {
 	    
 	public void removePCB(ProcessControlBlock process){
 		ready.deQueue(process);
-		
 	}
 	    	    
 	public ProcessStates getState(ProcessControlBlock process){
