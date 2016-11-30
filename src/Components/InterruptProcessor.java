@@ -15,14 +15,14 @@ public class InterruptProcessor {
 		interruptOn = false;
 	}
 
- 	PriorityQueue<Object> nxtUp = new PriorityQueue<Object>();
+ 	static PriorityQueue<Object> nxtUp = new PriorityQueue<Object>();
 
 	
 	public void signalInterrupt(boolean interrupt) {
-		InterruptProcessor.interruptOn = interrupt;
+		InterruptProcessor.interruptOn = true;
 	}
 	  
-	public void addEvent(EventControlBlock flag) {
+	public static void addEvent(EventControlBlock flag) {
 		nxtUp.add(flag);
 	    
 	}

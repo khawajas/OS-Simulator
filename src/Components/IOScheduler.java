@@ -9,13 +9,14 @@ public class IOScheduler {
 	//When an application issues a blocking I/O system call, the request is placed on the queue for that device. 
 	//The Kernel I/O scheduler rearranges the order of the queue to improve the overall system efficiency 
 	//and the average response time experienced by the applications.
-
 	
-	public int scheduleIO(ProcessControlBlock process, int timeIn) {
+	
+	public int scheduleIO(ProcessControlBlock process) {
 		int bigBang = IOBurst.generateIOBurst();
-
-		InterruptProcessor.addEvent(process, timeIn + bigBang);
-
+		//InterruptProcessor.addEvent(process, ioBurst);
+		
+		EventControlBlock event = new EventControlBlock(process, bigBang);
+		InterruptProcessor.addEvent(event);
 		if (!InterruptProcessor.hasInterruptOnStarted())
 		{
 			startIO();
@@ -27,7 +28,8 @@ public class IOScheduler {
 	  
 	public void startIO() {
 		//.signalInterrupt(true);
-		InterruptProcessor.signalInterrupt(true);
+		//InterruptProcessor.signalInterrupt = true;
+		InterruptProcessor.interruptOn = true;
 	}
 
 }
