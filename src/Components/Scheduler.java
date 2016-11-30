@@ -6,7 +6,7 @@ public class Scheduler {
 	//with a time quantum of 10 cycles
 	
 	private static ExecutionQueue ready = new ExecutionQueue();
-	
+	public int maxQuantam = 10;
 	
 	
 	public void insertPCB(ProcessControlBlock process){
@@ -24,27 +24,32 @@ public class Scheduler {
 		
 	}
 	    
-	public void setState(){
+	public void setState(ProcessControlBlock process, ProcessStates state){
+		process.setState(state);
 		
 	}
 	
-	public void getWait(){
+	public int getWait(ProcessControlBlock process){
+		return process.getWait();
 	    	
 	}
 	    
-	public void setWait(){
+	public void setWait(ProcessControlBlock process, int wait){
+		process.setWait(wait);
 	    	
 	}
 	    
-	public void getArrival(){
+	public int getArrival(ProcessControlBlock process){
+		return process.getArrival();
 	    	
 	}
 	    
-	public void setArrival(){
+	public void setArrival(ProcessControlBlock process, int arrival){
+		process.setArrival(arrival);
 	}
 	    
-	public void getCPUTime(){    	
-
+	public void getCPUTime(ProcessControlBlock process){  
+		return process.getCPUTime();
 	}
 
 	public void setCPUTime(){
