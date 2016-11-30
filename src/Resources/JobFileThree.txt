@@ -1,0 +1,6 @@
+LOAD 120 Game Window
+YIELD
+LOAD 150 Another Game Tab
+LOAD 300 Download Online Game
+OUT
+EXE
