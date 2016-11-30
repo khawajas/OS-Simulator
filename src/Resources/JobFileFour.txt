@@ -1,0 +1,11 @@
+LOAD 15 Word Pad
+YIELD
+I/O
+LOAD 35 Microsoft Word
+I/O
+LOAD 145 Chrome Browser
+I/O
+YIELD
+LOAD 300 Open Movie Trailer Site
+OUT
+EXE

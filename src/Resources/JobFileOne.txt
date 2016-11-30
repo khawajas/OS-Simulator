@@ -1,0 +1,6 @@
+LOAD 10 Word Pad
+LOAD 50 Google Browser
+LOAD 150 Open Tab
+YIELD
+LOAD 150 Open Tab
+EXE

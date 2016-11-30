@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,13 +35,14 @@ public class CommandInterface extends JFrame {
 	//Executes commands to the Operating System and the simulators
 	
 	long memory;
+	int numOfIO = 0;
 	int memoryValue;
 	int counter = 0;
 	String line = null;
 	String programName = null;
-	String num;
+	String runTimeLength;
 	int numberOfCycles;
-	Queue<String> newProcess = new LinkedList<String>();
+	Queue<Object> newProcess = new LinkedList<Object>();
 	
 	private JFrame mainFrame;
 	private JPanel controlPanel;
@@ -62,7 +64,7 @@ public class CommandInterface extends JFrame {
 	
 	public void prepareGUI() {
 		mainFrame = new JFrame("Operating System Interface");
-		mainFrame.setSize(400, 300);
+		mainFrame.setSize(300, 250);
 		
 		mainFrame.setLayout(new GridLayout(3,1));
 		mainFrame.addWindowListener(new WindowAdapter() {
@@ -91,7 +93,7 @@ public class CommandInterface extends JFrame {
 		JLabel commandLabel = new JLabel("Command: ", JLabel.RIGHT);
 		final JTextField commandText = new JTextField(10);
 		
-		JButton executeButton = new JButton("Execute");
+		JButton executeButton = new JButton("Run");
 		executeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String command = commandText.getText();
@@ -107,19 +109,17 @@ public class CommandInterface extends JFrame {
 					
 					break;
 				case  "LOAD":
+					CommandInterface c = new CommandInterface();
 					try {
-						load("jobFile1");
+						load();
 					} catch (IOException e1) {
+						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					break;
 				case  "EXE":
-					JLabel numberOfCyclesLabel = new JLabel("Number of Cycles: ", JLabel.RIGHT);
-					JTextField numberOfCyclesText = new JTextField(10);
-					controlPanel.add(numberOfCyclesLabel);
-					controlPanel.add(numberOfCyclesText);
-					mainFrame.setVisible(true);
-					//exe();
+					
+					exe();
 					break;
 				case  "RESET":
 					reset();
@@ -148,12 +148,13 @@ public class CommandInterface extends JFrame {
 	
 	
 	public void proc(){
+		
 		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		String[] col = {"Process State", "CPU Time Needed","CPU Time Used", "Number of I/O Requests"};
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		String[] col = {"Process Name", "Process State", "CPU Time Needed","CPU Time Used", "Number of I/O Requests"};
 		ProcessControlBlock pcb = new ProcessControlBlock();
 		Clock c = new Clock();
-		Object rowData[][] = { { pcb.getState(), "" , "","" } };
+		Object rowData[][] = { { programName,pcb.getState(), runTimeLength , "",numOfIO } };
 		    
 		
 		JTable table = new JTable(rowData, col);
@@ -172,7 +173,7 @@ public class CommandInterface extends JFrame {
 		memory = runtime.totalMemory() - runtime.freeMemory();
 		String num = Long.toString(memory);
 		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		String[] col = {"Memory Used"};
 		
 		
@@ -188,81 +189,85 @@ public class CommandInterface extends JFrame {
 		
 			
 	}
-	//read a program file by name, called in load method when "EXE" is read
-	public void readProgramFile(String name){
-		int counter = 0;
-		String program = name;
-		FileReader reader = null;
-		String line = null;
-		try {
-			reader = new FileReader(program);
-			BufferedReader bReader = new BufferedReader(reader);
-			while((line = bReader.readLine()) != null) {
-				counter++;
-				if (counter == 1){
-				 memoryValue = Integer.parseInt(bReader.readLine());
-				}
-				else if (line.startsWith("CALCULATE")){
-					
-					
-				}
-				else if (line.startsWith("I/O")){
-					
-				}
-				else if (line.startsWith("YIELD")){
-					
-				}
-				else if (line.startsWith("OUT")){
-					
-				}
-			}  
-				
-			
-		}  catch(IOException e) {
-			
-		}
+	
 			
 		
-	}
-		//load a job file when this is called
-	public void load(String name) throws IOException{
+	
+	//load a job file by name when this is called
+	//File structure example:
+	//*Command* *number of cycles* *Name of program*
+	//EXE
+	//...Each part is separated by a space
+	//Last line is "EXE"
+	
+	public void load() throws IOException{
+		String line;
+		File jobFile1 = new File("src/Resources/jobFile1");
+		File programFile1 = new File("src/Resources/programFile1");
+		BufferedReader j = (new BufferedReader(new FileReader(jobFile1)));
+		BufferedReader  p = (new BufferedReader(new FileReader(programFile1)));
+		while ( (line = j.readLine()) != null){
+			programName = null;
 			
-			File f = new File(name);
-			line = null;
-			
-				BufferedReader bRead = new BufferedReader(new FileReader(f));
+			String command = line;
+			if (!line.contains("EXE")){
+				runTimeLength = j.readLine();
+				newProcess.add(command);
+				programName = j.readLine();
+				newProcess.add(Integer.parseInt(runTimeLength));
 				
-				while((line = bRead.readLine()) != null) {
-					programName = null;
-					
-					String command = null;
-					
-					
-					if (line.contains(" ")) {
+				
+			}
+			if (line.contains("EXE")){
+				String memoryValue = p.readLine();
+				String prog;
+				String cycleNumber;
+				int counter = 0;
+				while((prog = p.readLine()) != null) {
+				
+				
+					 if (line.startsWith("CALCULATE")){
+						cycleNumber = p.readLine();
 						
-						command = line.substring(0, line.indexOf(" "));
-						newProcess.add(command);
-						num = line.substring(line.indexOf(" "), line.lastIndexOf(" "));
-						newProcess.add(num);
-						programName = line.substring(line.lastIndexOf(" "), line.length());	
-						List<String> newProcessList = new ArrayList<String>(newProcess);
-					} 
-					
-					
-					 if (line.startsWith("EXE")){
-						readProgramFile(getProgramName());
 						
 					}
-					
-					
+					else if (line.startsWith("I/O")){
+						numOfIO++;
+						
+
+					}
+					else if (line.startsWith("YIELD")){
+
+					}
+					else if (line.startsWith("OUT")){
+						JFrame fr = new JFrame();
+						fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						String[] col = {"Process Name","Process State", "CPU Time Needed","CPU Time Used", "Number of I/O Requests"};
+						ProcessControlBlock pcb = new ProcessControlBlock();
+						Clock c = new Clock();
+						Object rowData[][] = { { programName ,pcb.getState(), runTimeLength , "","" } };
+						    
+						
+						JTable table = new JTable(rowData, col);
+						JScrollPane scrollPane = new JScrollPane(table);
+						fr.add(scrollPane, BorderLayout.CENTER);
+						fr.setSize(300, 150);
+						fr.setVisible(true);
+						
+					}	
+					}
+				}
+		}
 				
-					
-				} 
 				
-			//} catch (IOException e) {
-			//	System.out.println("no");
-			} 
 			
+	
+		
+		
+	}
+	
+	
+	
 	
 
 	//getter for program file name
@@ -272,7 +277,14 @@ public class CommandInterface extends JFrame {
 	
 	//	
 	public void exe() {
-		
+		JFrame cyclesFrame = new JFrame("Enter Number of Cycles");
+		cyclesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		JLabel numberOfCyclesLabel = new JLabel("Number of Cycles: ", JLabel.LEFT);
+		JTextField numberOfCyclesText = new JTextField(5);
+		cyclesFrame.add(numberOfCyclesLabel);
+		cyclesFrame.add(numberOfCyclesText);
+		cyclesFrame.setSize(300, 200);
+		cyclesFrame.setVisible(true);
 		
 		
 		
@@ -284,7 +296,11 @@ public class CommandInterface extends JFrame {
 			Clock clock = new Clock();
 			clock.resetClock();
 			mainFrame.setVisible(false);
+			CommandInterface t = new CommandInterface();
+			t.prepareGUI();
+			mainFrame.repaint();
 			mainFrame.setVisible(true);
+			
 	}
 		
 	public void promptUser(){
