@@ -49,7 +49,7 @@ public class Scheduler {
 	}
 	    
 	public void getCPUTime(ProcessControlBlock process){  
-		return process.getCPUTime();
+		//return process.getCPUTime();
 	}
 
 	public void setCPUTime(){

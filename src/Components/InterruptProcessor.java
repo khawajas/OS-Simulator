@@ -20,9 +20,10 @@ public class InterruptProcessor {
 	    
 	}
 	  
-	public EventControlBlock getEvent(int element_number) {
+	public static EventControlBlock getEvent() {
 		//nxtUp.remove(element_number);
-		return nxtUp.getEvent(element_number);
+		//return nxtUp.getEvent(element_number);
+		return EventQueue.poll();
 	}
 
 	public static boolean hasInterruptOnStarted() {

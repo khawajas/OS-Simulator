@@ -14,7 +14,12 @@ public class EventQueue {
 	    queue.add(event);
 	}
 		  
-	public void deQueue(EventControlBlock event) {
+	public static void deQueue(EventControlBlock event) {
 		queue.remove(event);
 	}
+	
+	public static EventControlBlock poll(){
+		return queue.poll();
+	}
+	
 }
