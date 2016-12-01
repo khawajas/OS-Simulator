@@ -141,12 +141,7 @@ public class CommandInterface extends JFrame {
 		mainFrame.setVisible(true);
 		
 	}
-	
-	
-	
-	
-	
-	
+
 	public void proc(){
 		
 		JFrame frame = new JFrame();
@@ -215,6 +210,7 @@ public class CommandInterface extends JFrame {
 				newProcess.add(command);
 				programName = j.readLine();
 				newProcess.add(Integer.parseInt(runTimeLength));
+				//Scheduler.insertPCB(new ProcessControlBlock(line, ));
 				
 				
 			}
@@ -239,6 +235,7 @@ public class CommandInterface extends JFrame {
 					else if (line.startsWith("YIELD")){
 
 					}
+					 
 					else if (line.startsWith("OUT")){
 						JFrame fr = new JFrame();
 						fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -254,22 +251,13 @@ public class CommandInterface extends JFrame {
 						fr.setSize(300, 150);
 						fr.setVisible(true);
 						
-					}	
-					}
+					}			 
+				}
 				}
 		}
-				
-				
-			
-	
-		
 		
 	}
 	
-	
-	
-	
-
 	//getter for program file name
 	public String getProgramName(){
 		return programName;
@@ -285,10 +273,6 @@ public class CommandInterface extends JFrame {
 		cyclesFrame.add(numberOfCyclesText);
 		cyclesFrame.setSize(300, 200);
 		cyclesFrame.setVisible(true);
-		
-		
-		
-		
 			
 	}
 		

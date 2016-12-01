@@ -1,3 +1,5 @@
+package Components;
+
 public class CacheMem
 {
 	static final int MAXMEM = 256;

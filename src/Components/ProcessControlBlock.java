@@ -22,6 +22,7 @@ public class ProcessControlBlock {
 	private ProcessStates processState;
 	private int pID;
 	private Clock clock;
+	private String processName;
 	
 	private int startTime;
 	private int endTime;
@@ -34,7 +35,8 @@ public class ProcessControlBlock {
 	public ProcessControlBlock(){
 		
 	}
-	public ProcessControlBlock(ProcessStates pState, int id, int sTime, int arrival){
+	public ProcessControlBlock(String pName, ProcessStates pState, int id, int sTime, int arrival){
+		this.processName = pName;
 		this.processState = pState;
 		this.pID = id;
 		this.arrival = arrival;
