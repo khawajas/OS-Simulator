@@ -1,7 +1,4 @@
 LOAD
 50
-Web Browser
-LOAD
-200
-Word Processor
+WebBrowser
 EXE

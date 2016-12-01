@@ -1,8 +1,10 @@
-LOAD 15 Pac Man
-YIELD
-LOAD 200 Nintendo 64 Emulator
-CALCULATE
-I/O
-LOAD 124 Legend of Zelda 
-OUT
+LOAD 
+15
+Pac Man
+LOAD 
+200
+Nintendo 64 Emulator
+LOAD 
+124 
+Legend of Zelda
 EXE
