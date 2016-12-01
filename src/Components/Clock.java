@@ -3,13 +3,13 @@ package Components;
 //Simulates a CPU clock
 
 public class Clock {
-	private int time;
+	private static int time;
 	
 	public void execute() {
 		time++;
 	 }
 	
-	public int getClock() {
+	public static int getClock() {
 		return time;
 	}
 	public void resetClock(){

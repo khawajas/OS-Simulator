@@ -153,12 +153,7 @@ public class CommandInterface extends JFrame {
 		mainFrame.setVisible(true);
 		
 	}
-	
-	
-	
-	
-	
-	
+
 	public void proc(){
 		
 		JFrame frame = new JFrame();
@@ -247,7 +242,7 @@ public class CommandInterface extends JFrame {
 						counter++;
 						Random random = new Random();
 						int num = random.nextInt(100);
-						pcb.setState(processState.WAIT);
+						pcb.setState(ProcessStates.WAIT);
 					}
 					if (ln.startsWith("YIELD")){
 						
@@ -293,6 +288,9 @@ public class CommandInterface extends JFrame {
 				runTimeLength = j.readLine();
 				newProcess.add(command);
 				programName = j.readLine();
+	newProcess.add(Integer.parseInt(runTimeLength));
+				//Scheduler.insertPCB(new ProcessControlBlock(line, ));
+
 				
 				newProcess.add(Integer.parseInt(runTimeLength));
 				System.out.print(programName);
@@ -319,6 +317,7 @@ public class CommandInterface extends JFrame {
 					else if (line.startsWith("YIELD")){
 
 					}
+					 
 					else if (line.startsWith("OUT")){
 						JFrame fr = new JFrame();
 						fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -334,21 +333,18 @@ public class CommandInterface extends JFrame {
 						fr.setSize(300, 150);
 						fr.setVisible(true);
 						
-					}	
-					}
+					}			 
+				}
 				}
 		}
-				
-				
-			
-	
-		
 		
 	}
+
 	*/
 	
 	
 	
+
 
 	//getter for program file name
 	public String getProgramName(){
@@ -370,6 +366,7 @@ public class CommandInterface extends JFrame {
 		
 		cyclesFrame.setSize(300, 200);
 		cyclesFrame.setVisible(true);
+
 		numberOfCyclesText.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent e){
 				JTextField text = (JTextField) e.getSource();
@@ -383,7 +380,7 @@ public class CommandInterface extends JFrame {
 		
 		
 		
-			
+
 	}
 		
 	public void reset() {
