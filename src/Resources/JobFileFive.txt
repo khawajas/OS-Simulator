@@ -1,10 +1,4 @@
-LOAD 
+LOAD
 15
-Pac Man
-LOAD 
-200
-Nintendo 64 Emulator
-LOAD 
-124 
-Legend of Zelda
+PacMan
 EXE
