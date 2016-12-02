@@ -17,8 +17,12 @@ public class EventControlBlock {
 		this.bigBang = timeIn;
 	}
 
-	public void setService(ProcessControlBlock p) {
-		this.process = p;
+	public void setInstruction(String instruction) {
+		this.instructor = instruction;
+	}
+
+	public getInstruction() {
+		 return instruction;
 	}
 
 	public void setBigBang(int timeIn){
